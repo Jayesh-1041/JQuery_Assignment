@@ -30,7 +30,7 @@ jQuery is a lightweight, "write less, do more", JavaScript library. The purpose 
     <script src='main.js'></script>
     <style>
         .red{
-            color: blue;
+            color: rgb(60, 73, 67);
         }
         .blake{
             color: aqua;
@@ -38,11 +38,19 @@ jQuery is a lightweight, "write less, do more", JavaScript library. The purpose 
         .some{
             color: brown;
         }
+        .box{
+            height: 100px;
+            width: 100px;
+            margin-top: 50px;
+            background-color: rgb(231, 219, 204);
+            position: absolute;
+        }
     </style>
     </head>
     <body>
     <div class="box red">This is box</div>
     <button>Click here</button>
+    <button>Start Animation</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
@@ -54,6 +62,17 @@ jQuery is a lightweight, "write less, do more", JavaScript library. The purpose 
             $('.box').toggleClass('some');
             $('.box').hasClass('red');
         });
+
+        $(document).ready(function(){
+        $("button").click(function(){
+        $("div").animate({
+        left: '250px',
+        opacity: '0.5',
+        height: '150px',
+        width: '150px'
+        });
+        });
+    });
     </script>
     </body>
     </html>
@@ -66,142 +85,154 @@ jQuery is a lightweight, "write less, do more", JavaScript library. The purpose 
     <!DOCTYPE html>
     <html>
     <head>
-    <html lang="en">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <style>
-    * {
-        box-sizing: border-box;
-    };
+        <title>Slider using jQuery</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    body {
-        font-family: Verdana, sans-serif;
-        margin:0;
-        };
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            h1{
+                padding: 10px 0px 0px 550px;
+                font-size: 3rem;
+                font-weight: 900;
+            }
+            img {
+                width: 100%;
+                height: 400px;
+                border-radius: 40px;
+            }
 
-    .mySlides {
-        display: none;
-    };
+            .height {
+                height: 10px;
+            }
 
-    img {
-        vertical-align: middle;
-        height: 100%;
-        margin-top: 50px;
-    };
+            .image-container {
+                padding-top: 0px;
+                max-width: 800px;
+                position: relative;
+                margin: auto;
+            }
 
+            .next {
+                right: 0;
+            }
 
-    .slideshow-container {
-    max-width: 1000px;
-    position: relative;
-    margin: auto;
-    };
+            .previous,
+            .next {
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                padding: 10px;
+                margin-top: -25px;
+            }
 
-    .prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -22px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-    };
+            .captionText {
+                color: #000000;
+                font-size: 14px;
+                position: absolute;
+                padding: 12px 12px;
+                bottom: 8px;
+                width: 100%;
+                text-align: center;
+            }
 
-    .next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-    };
+            .fa {
+                font-size: 32px;
+            }
 
-    .prev:hover, .next:hover {
-    background-color: rgba(44, 27, 27, 0.8);
-    };
+            .footerdot {
+                cursor: pointer;
+                height: 15px;
+                width: 15px;
+                margin: 0 2px;
+                background-color: #bbbbbb;
+                border-radius: 50%;
+                display: inline-block;
+                transition: background-color 0.5s ease;
+            }
 
-    .text {
-    color: #f2f2f2;
-    font-size: 15px;
-    padding: 8px 12px;
-    position: absolute;
-    bottom: 8px;
-    width: 100%;
-    text-align: center;
-    };
-
-    .numbertext {
-    color: #f2f2f2;
-    font-size: 12px;
-    padding: 8px 12px;
-    position: absolute;
-    top: 0;
-    };
-
-    .fade {
-    animation-duration: 1.5s;
-    };
-    </style>
+            .active,
+            .footerdot:hover {
+                background-color: black;
+            }
+        </style>
     </head>
     <body>
+        <h1>jQurey Slider</h1>
+        
+        <div class="image-container">
+            <div class="slide">
+                <img src="https://images.pexels.com/photos/133081/pexels-photo-133081.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+            </div>
 
-    <div class="slideshow-container">
+            <div class="slide">
+                <img src="https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+            </div>
 
-    <div class="mySlides fade">
-    <div class="numbertext">1 / 3</div>
-    <img src="https://images.pexels.com/photos/18873395/pexels-photo-18873395/free-photo-of-tea-coffee-and-a-vase-with-blooming-flowers-on-a-table-standing-by-a-window.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" style="width:100%" height="500px">
-    <div class="text">Caption One</div>
-    </div>
+            <div class="slide">
+                <img src="https://images.pexels.com/photos/1043458/pexels-photo-1043458.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+            </div>
 
-    <div class="mySlides fade">
-    <div class="numbertext">2 / 3</div>
-    <img src="https://images.pexels.com/photos/14894306/pexels-photo-14894306.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" style="width:100%" height="500px">
-    <div class="text">Caption Two</div>
-    </div>
+            
+            <a class="previous" onclick="moveSlides(-1)">
+                <i class="fa fa-chevron-circle-left"></i>
+            </a>
+            <a class="next" onclick="moveSlides(1)">
+                <i class="fa fa-chevron-circle-right"></i>
+            </a>
+        </div>
 
-    <div class="mySlides fade">
-    <div class="numbertext">3 / 3</div>
-    <img src="https://images.pexels.com/photos/17363224/pexels-photo-17363224/free-photo-of-mountain-in-snow.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" style="width:100%" height="500px">
-    <div class="text">Caption Three</div>
-    </div>
+        <br>
 
-    <a class="prev" onclick="plusSlides(-1)">❮</a>
-    <a class="next" onclick="plusSlides(1)">❯</a>
+        <div style="text-align:center">
+            <span class="footerdot" onclick="activeSlide(1)">
+            </span>
+            <span class="footerdot" onclick="activeSlide(2)">
+            </span>
+            <span class="footerdot" onclick="activeSlide(3)">
+            </span>
+        </div>
 
-    </div>
-    <br>
+        <script>
+            let slideIndex = 1;
+            displaySlide(slideIndex);
 
-    <script>
-    let slideIndex = 1;
-    showSlides(slideIndex);
+            function moveSlides(n) {
+                displaySlide(slideIndex += n);
+            }
 
-    function plusSlides(n) {
-    showSlides(slideIndex += n);
-    }
+            function activeSlide(n) {
+                displaySlide(slideIndex = n);
+            }
 
-    function currentSlide(n) {
-    showSlides(slideIndex = n);
-    }
 
-    function showSlides(n) {
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
-    if (n > slides.length) {slideIndex = 1}    
-    if (n < 1) {slideIndex = slides.length}
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-    }
+            function displaySlide(n) {
+                let i;
+                let totalslides =
+                    document.getElementsByClassName("slide");
 
-    slides[slideIndex-1].style.display = "block";  
-    }
+                let totaldots =
+                    document.getElementsByClassName("footerdot");
 
-    </script>
-
+                if (n > totalslides.length) {
+                    slideIndex = 1;
+                }
+                if (n < 1) {
+                    slideIndex = totalslides.length;
+                }
+                for (i = 0; i < totalslides.length; i++) {
+                    totalslides[i].style.display = "none";
+                }
+                for (i = 0; i < totaldots.length; i++) {
+                    totaldots[i].className =
+                        totaldots[i].className.replace(" active", "");
+                }
+                totalslides[slideIndex - 1].style.display = "block";
+                totaldots[slideIndex - 1].className += " active";
+            }
+        </script>
     </body>
-    </html> 
-
+    </html>
 
 
 ## **Q-4.** Event bubbling tickling example
@@ -217,6 +248,14 @@ jQuery is a lightweight, "write less, do more", JavaScript library. The purpose 
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <style>
+            div {
+                color: black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+            
             .boss {
                 width: 500px;
                 height: 500px;
@@ -248,9 +287,9 @@ jQuery is a lightweight, "write less, do more", JavaScript library. The purpose 
         </style>
     </head>
     <body>
-        <div class="boss">
-            <div class="Client">
-                <div class="sub-client">
+        <div class="boss">boss
+            <div class="Client">client
+                <div class="sub-client">sub-client
                     <button>Click here</button>
                 </div>
             </div>
@@ -263,27 +302,50 @@ jQuery is a lightweight, "write less, do more", JavaScript library. The purpose 
         let btn = document.getElementsByTagName('button')[0];
 
 
-        boss.addEventListener('click', (event) => {
-        // event.stopPropagation();
-        console.log('boss is clicked');
-        });
+        document.addEventListener('click', (event) => {
+            console.log("Document capturing");
+        }, {capture: true});
 
-        Client.addEventListener('click', (event) => {
-        // event.stopPropagation();
-        console.log('Client is clicked');
+        boss.addEventListener('click', (event) => {
+        console.log("boss capturing");
         btn.style.color = 'red';
         Client.style.backgroundColor = 'blue';
-        });
+        }, {capture: true});
+
+        Client.addEventListener('click', (event) => {
+        console.log("Client capturing");
+        }, {capture: true});
 
         subClient.addEventListener('click', (event) => {
-        // event.stopPropagation();
-        console.log('subClient is clicked');
-        });
+        console.log("sub-client capturing");
+        }, {capture: true});
 
         btn.addEventListener('click', (event) => {
-        // event.stopPropagation();
-        console.log('Btn is clicked');
-        });
+        console.log("sub-client capturing");
+        }, {capture: true});
+        
+
+        document.addEventListener('click', (event) => {
+            console.log("Document capturing");
+        }, {capture: false});
+
+        boss.addEventListener('click', (event) => {
+        console.log("boss capturing");
+        btn.style.color = 'red';
+        Client.style.backgroundColor = 'blue';
+        }, {capture: false});
+
+        Client.addEventListener('click', (event) => {
+        console.log("Client capturing");
+        }, {capture: false});
+
+        subClient.addEventListener('click', (event) => {
+        console.log("sub-client capturing");
+        }, {capture: false});
+
+        btn.addEventListener('click', (event) => {
+        console.log("sub-client capturing");
+        }, {capture: false});
     </script>
 
         <script>
