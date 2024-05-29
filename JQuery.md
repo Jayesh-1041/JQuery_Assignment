@@ -91,153 +91,91 @@ jQuery is a lightweight, "write less, do more", JavaScript library. The purpose 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <style>
-            h1{
-                padding: 10px 0px 0px 550px;
-                font-size: 3rem;
-                font-weight: 900;
-            }
-            img {
-                width: 100%;
-                height: 400px;
-                border-radius: 40px;
-            }
+    
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0e8e8;
+    }
 
-            .height {
-                height: 10px;
-            }
+    .slider {
+        height: 400px;
+        width: 80%;
+        overflow: hidden;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
 
-            .image-container {
-                padding-top: 0px;
-                max-width: 800px;
-                position: relative;
-                margin: auto;
-            }
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
 
-            .next {
-                right: 0;
-            }
+    .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
 
-            .previous,
-            .next {
-                cursor: pointer;
-                position: absolute;
-                top: 50%;
-                padding: 10px;
-                margin-top: -25px;
-            }
-
-            .captionText {
-                color: #000000;
-                font-size: 14px;
-                position: absolute;
-                padding: 12px 12px;
-                bottom: 8px;
-                width: 100%;
-                text-align: center;
-            }
-
-            .fa {
-                font-size: 32px;
-            }
-
-            .footerdot {
-                cursor: pointer;
-                height: 15px;
-                width: 15px;
-                margin: 0 2px;
-                background-color: #bbbbbb;
-                border-radius: 50%;
-                display: inline-block;
-                transition: background-color 0.5s ease;
-            }
-
-            .active,
-            .footerdot:hover {
-                background-color: black;
-            }
+    .slide img {
+        width: 100%;
+        border-radius: 10px;
+        
+    }
         </style>
     </head>
     <body>
-        <h1>jQurey Slider</h1>
-        
-        <div class="image-container">
-            <div class="slide">
-                <img src="https://images.pexels.com/photos/133081/pexels-photo-133081.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-            </div>
+        <div class="slider">
+            <div class="slides">
+                <div class="slide"><img src="https://th.bing.com/th/id/R.7383028831604862ec47fefee3e8f43f?rik=JvqjDCfPocchLg&riu=http%3a%2f%2fthewowstyle.com%2fwp-content%2fuploads%2f2015%2f01%2fimages-of-nature-4.jpg&ehk=%2b1REJDS0cEPD0z2IP%2fddCyP9IgFz6xVpp8fyQr78SJ0%3d&risl=&pid=ImgRaw&r=0" alt="Image 1"></div>
 
-            <div class="slide">
-                <img src="https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-            </div>
+                <div class="slide"><img src="https://images.pexels.com/photos/462118/pexels-photo-462118.jpeg?cs=srgb&dl=bloom-blooming-blossom-462118.jpg&fm=jpg" alt="Image 2"></div>
 
-            <div class="slide">
-                <img src="https://images.pexels.com/photos/1043458/pexels-photo-1043458.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                <div class="slide"><img src="https://th.bing.com/th/id/R.d22aafa9433efcc9ed4d9a7808c05a8a?rik=8tekSpiFRq3jhg&riu=http%3a%2f%2fwww.pixelstalk.net%2fwp-content%2fuploads%2f2016%2f07%2fDownload-Free-Pictures-3840x2160.jpg&ehk=ZfChm9icVrVUFSnPnWsPaf7qOQGA9l1qj0BRZx4lTzE%3d&risl=&pid=ImgRaw&r=0" alt="Image 3"></div>
             </div>
-
-            
-            <a class="previous" onclick="moveSlides(-1)">
-                <i class="fa fa-chevron-circle-left"></i>
-            </a>
-            <a class="next" onclick="moveSlides(1)">
-                <i class="fa fa-chevron-circle-right"></i>
-            </a>
         </div>
-
-        <br>
-
-        <div style="text-align:center">
-            <span class="footerdot" onclick="activeSlide(1)">
-            </span>
-            <span class="footerdot" onclick="activeSlide(2)">
-            </span>
-            <span class="footerdot" onclick="activeSlide(3)">
-            </span>
-        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
-            let slideIndex = 1;
-            displaySlide(slideIndex);
+            $(document).ready(function() {
+        const $slides = $('.slides');
+        const slideCount = $('.slide').length;
+        let currentIndex = 0;
 
-            function moveSlides(n) {
-                displaySlide(slideIndex += n);
+        function goToSlide(index) {
+            $slides.css('transform', `translateX(${-index * 100}%)`);
+            currentIndex = index;
+        }
+
+        function nextSlide() {
+            if (currentIndex < slideCount - 1) {
+                goToSlide(currentIndex + 1);
+            } else {
+                goToSlide(0);
             }
+        }
 
-            function activeSlide(n) {
-                displaySlide(slideIndex = n);
-            }
+        setInterval(nextSlide, 3000);
+        });
 
-
-            function displaySlide(n) {
-                let i;
-                let totalslides =
-                    document.getElementsByClassName("slide");
-
-                let totaldots =
-                    document.getElementsByClassName("footerdot");
-
-                if (n > totalslides.length) {
-                    slideIndex = 1;
-                }
-                if (n < 1) {
-                    slideIndex = totalslides.length;
-                }
-                for (i = 0; i < totalslides.length; i++) {
-                    totalslides[i].style.display = "none";
-                }
-                for (i = 0; i < totaldots.length; i++) {
-                    totaldots[i].className =
-                        totaldots[i].className.replace(" active", "");
-                }
-                totalslides[slideIndex - 1].style.display = "block";
-                totaldots[slideIndex - 1].className += " active";
-            }
         </script>
-    </body>
-    </html>
+        </body>
+        </html>
 
 
 ## **Q-4.** Event bubbling tickling example
 
 **Ans.**
+
+    ==> Event Bubbling is a behavior in the Document Object Model (DOM) where an element receives an event, and that event propagates or “bubbles up” to its parent and ancestor elements in the DOM tree until it reaches the root element. In other words, when an event occurs on a child element, it also triggers the same event on its parent and ancestor elements.
+
+    => Event bubbling allows you to handle an event in a parent element instead of the actual element that received the event. This pattern is called Event Delegation.
+    
+    => For instance, you can attach an event listener to a parent element that contains a list of items. When an item within the list is clicked, the event bubbles up to the parent, allowing you to handle it efficiently.
 
     <!DOCTYPE html>
     <html>
